@@ -44,6 +44,12 @@ public class RandomUtil {
 		return str.charAt(random(0, str.length()-1));
 	}
 	
+	//方法3：返回随机性别。
+	public static String randomsex (){
+			String str = "男女";
+			return Character.toString(str.charAt(random(0, str.length()-1)));
+	}
+	
 	
 	//方法4：返回参数length个字符串，方法内部要调用randomCharacter()方法
 	public static String randomString(int length){
