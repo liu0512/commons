@@ -19,6 +19,22 @@ import java.util.List;
  */
 public class StreamUtil {
 
+	/**
+	 * 关闭流的方法
+	 * 数组参数，可以批量删除多个打开的流   
+	 */
+	public static void closeAll(AutoCloseable... autoCloseables ) {
+		if(autoCloseables!=null) {
+			for(AutoCloseable autoCloseable:autoCloseables) {
+				try {
+					autoCloseable.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 //	读取文件对象到list集合中
 	public static List<String> readFile2List(File file) throws FileNotFoundException{
 		FileInputStream fileInputStream = new FileInputStream(file);

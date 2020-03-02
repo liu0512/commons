@@ -72,7 +72,7 @@ public class RandomUtil {
 	//方法3：返回随机手机号。
 	public static String randomemail (){
 			StringBuffer buffer = new StringBuffer();
-			String email = null;
+			String email = "";
 			String[] str = {"@qq.com","@163.com","@sian.com","@gmail.com","@sohu.com","@hotmail.com","@foxmail.com"};
 			int i = random(3, 20);
 			for (int j = 0; j < i; j++) {

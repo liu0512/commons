@@ -1,5 +1,7 @@
 package com.liuguodong.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -12,6 +14,112 @@ import java.util.Date;
  */
 public class DateUtil {
 
+	public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
+//	时间格式化  
+	public static String format(Date theDate) {
+		return dateFormat.format(theDate);
+	}
+	
+//	 根据出生日期计算年龄
+	public static int getAge(String birthDateStr) {
+		Date birthDate = null;
+		try {
+			//解析日期字符串为Date对象
+			birthDate = dateFormat.parse(birthDateStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		//调用日期计算方法
+		return getAgeByBirthday(birthDate);
+	}
+	
+//	获取开始日期和结束日期之间有多少天   
+	public static int getDayNum(Date date1,Date date2) {
+		//一天有多少毫秒
+		Long dayTime = 1000*60*60*24L;
+		Long startTime = date1.getTime();
+		Long endTime = date2.getTime();
+//		System.out.println(startTime);
+//		System.out.println(endTime);
+		Double dayNum = Math.abs(((endTime-startTime)/dayTime*1.0));
+//		dayNum = Math.ceil(dayNum);
+//		System.out.println(dayNum);
+		return dayNum.intValue()+1;
+	}
+	
+//	验证指定日期是否为今天   
+	public static boolean isToday(Date theDate) {
+		Date nowDate = new Date();
+		String nowDateStr = dateFormat.format(nowDate);
+		String theDateStr = dateFormat.format(theDate);
+		return nowDateStr.equals(theDateStr);
+	}
+	
+//	验证指定日期是否为今天    
+	public static boolean isToday(String theDateStr) {
+		try {
+			Date theDate = dateFormat.parse(theDateStr);
+			return isToday(theDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	/**
+	 * @Title: compareTime   
+	 * @Description: TODO(描述这个方法的作用)   
+	 * @param: @param date1
+	 * @param: @param date2
+	 * @param: @return      
+	 * @return: int      
+	 * @throws
+	 */
+	public static int compareTime(Date date1,Date date2) {
+		long time1 = date1.getTime();
+		long time2 = date2.getTime();
+		if(time1==time2) {
+			return 0;
+		}
+		if(time1>time2) {
+			return 1;
+		}
+		return -1;
+		
+	}
+	
+//	判断指定日期是否在本周   
+	public static boolean isInWeek(Date theDate) {
+		Date nowDate = new Date();
+		Calendar c = Calendar.getInstance();
+		c.setTime(nowDate);
+		//本周的第几天
+		int dayofweek = c.get(Calendar.DAY_OF_WEEK);
+		//设置本周第一天的时间
+		c.add(Calendar.DAY_OF_YEAR, 1-dayofweek);
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		Date firstDate = c.getTime();
+		System.out.println(dateTimeFormat.format(firstDate));
+		//设置本周最后一天的时间
+		c.add(Calendar.DAY_OF_YEAR, 6);
+		c.set(Calendar.HOUR_OF_DAY, 23);
+		c.set(Calendar.MINUTE, 59);
+		c.set(Calendar.SECOND, 59);
+		Date lastDate = c.getTime();
+		System.out.println(dateTimeFormat.format(theDate));
+		System.out.println(dateTimeFormat.format(lastDate));
+		return compareTime(theDate,firstDate)>=0 && compareTime(theDate,lastDate)<=0;
+	}
+	
+//	计算指定日期距离今天，过去了多少天或还有多少天   
+	public static int getDayNum(Date date) {
+		Date date2 = new Date();
+		return getDayNum(date,date2);
+	}
 	
 //		把传入的日期前推24个小时。即一天
 		public static Date subDate(Date date) {
