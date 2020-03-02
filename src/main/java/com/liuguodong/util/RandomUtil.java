@@ -1,5 +1,6 @@
 package com.liuguodong.util;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -50,16 +51,35 @@ public class RandomUtil {
 			return Character.toString(str.charAt(random(0, str.length()-1)));
 	}
 	
-	//方法3：返回随机性别。
+	//方法3：返回随机手机号。
 	public static String randomshouji (){
-				String str = "123456789";
-				String shouji = "13";
-				String dianhua = null;
-				for (int i = 0; i < 9; i++) {
-					String a = Character.toString(str.charAt(random(0, str.length()-1)));
-					dianhua = shouji.concat(a);
-				}
-				return dianhua;
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(13);
+		for (int j = 0; j < 9; j++) {
+			int o = random(0, 9);
+			buffer.append(o);
+		}
+		String dianhua = buffer.toString();
+		return dianhua;
+	}
+	
+	//方法3：返回1个1-9,a-Z之间的随机字符。
+	public static char randomCharacter1 (){
+		String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		return str.charAt(random(0, str.length()-1));
+	}	
+		
+	//方法3：返回随机手机号。
+	public static String randomemail (){
+			StringBuffer buffer = new StringBuffer();
+			String email = null;
+			String[] str = {"@qq.com","@163.com","@sian.com","@gmail.com","@sohu.com","@hotmail.com","@foxmail.com"};
+			int i = random(3, 20);
+			for (int j = 0; j < i; j++) {
+				email += randomCharacter1();
+			}
+			email = email + str[random(0, str.length-1)];
+			return email;
 	}
 	
 	//方法4：返回参数length个字符串，方法内部要调用randomCharacter()方法
