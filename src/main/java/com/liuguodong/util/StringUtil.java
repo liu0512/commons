@@ -12,6 +12,26 @@ import java.util.Random;
  */
 public class StringUtil {
 
+	/**
+	 * @Title: isNull   
+	 * @Description: 判断字符串是否为空   
+	 * @param: @param str
+	 * @param: @return      
+	 * @return: boolean      
+	 * @throws
+	 */
+	public static boolean isNull(String str) {
+		if(str==null) {
+			return true;
+		}
+		/** 去空格后，如果为"",返回true **/
+		str = str.trim();
+		if("".equals(str)) {
+			return true;
+		}
+		return false;
+	}
+	
 	//方法1：判断源字符串是否有值，空引号(空白字符串)也算没值 
 	public static boolean hasLength(String src){
 		return src != null && src.length()>0;
