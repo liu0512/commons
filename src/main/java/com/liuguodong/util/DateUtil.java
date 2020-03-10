@@ -35,6 +35,64 @@ public class DateUtil {
 		return getAgeByBirthday(birthDate);
 	}
 	
+	/**
+	 * @Title: parse   
+	 * @Description: 解析日期   
+	 * @param: @param theDateStr
+	 * @param: @param format
+	 * @param: @return      
+	 * @return: Date      
+	 * @throws
+	 */
+	public static Date parse(String theDateStr,String format) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+		try {
+			return simpleDateFormat.parse(theDateStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * @Title: getRandomDate   
+	 * @Description: 获取随机时间 
+	 * @param: @param date1
+	 * @param: @param date2
+	 * @param: @return      
+	 * @return: Date      
+	 * @throws
+	 */
+	public static Date getRandomDate(Date date1,Date date2) {
+		Long randomLong = Math.abs(date1.getTime()-date2.getTime());
+		long random = (long) (randomLong*Math.random());
+		long newDateLong = compare(date1, date2)==1?date2.getTime()+random:date1.getTime()+random;
+		return new Date(newDateLong);
+	}
+	
+	/**
+	 * @Title: compare   
+	 * @Description: 0-相等
+					1- date1大于date2
+					-1 date1小于date2   
+	 * @param: @param date1
+	 * @param: @param date2
+	 * @param: @return      
+	 * @return: boolean      
+	 * @throws
+	 */
+	public static int compare(Date date1,Date date2) {
+		long time1 = date1.getTime();
+		long time2 = date2.getTime();
+		if(time1==time2) {
+			return 0;
+		}
+		if(time1>time2) {
+			return 1;
+		}
+		return -1;
+	}
+	
 //	获取开始日期和结束日期之间有多少天   
 	public static int getDayNum(Date date1,Date date2) {
 		//一天有多少毫秒
